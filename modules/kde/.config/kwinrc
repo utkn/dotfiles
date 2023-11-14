@@ -40,7 +40,7 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.44121093749999996},{"w
 tiles={"layoutDirection":"horizontal","tiles":[]}
 
 [Tiling][92e842d7-5928-5c43-884a-4912e7cc82ed]
-tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+tiles={"layoutDirection":"horizontal","tiles":[]}
 
 [Tiling][c8a656d9-5c72-5566-bf13-a73bb13e0a6b]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
