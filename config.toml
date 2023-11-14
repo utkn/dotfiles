@@ -1,0 +1,16 @@
+[[module]]
+source = "modules/alacritty"
+target = "~/.config/alacritty"
+
+[[module]]
+source = "modules/kde"
+target = "~"
+
+[[module]]
+source = "modules/helix"
+target = "~/.config/helix"
+
+[[module]]
+source = "modules/fish"
+target = "~/.config/fish"
+
