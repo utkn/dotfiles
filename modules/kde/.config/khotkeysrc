@@ -997,6 +997,11 @@ Type=GESTURE
 AllowKDEAppsToRememberWindowPositions[$d]
 ColorScheme[$d]
 ColorSchemeHash[$d]
+fixed[$d]
+font[$d]
+menuFont[$d]
+smallestReadableFont[$d]
+toolBarFont[$d]
 
 [Gestures]
 Disabled=true
@@ -1011,9 +1016,14 @@ WindowsCount=0
 Theme[$d]
 
 [KDE]
+ColorScheme[$d]
 LookAndFeelPackage[$d]
 SingleClick[$d]
 widgetStyle[$d]
+
+[KDE Action Restrictions]
+action/start_new_session[$d]
+action/switch_user[$d]
 
 [KFileDialog Settings]
 Allow Expansion[$d]
