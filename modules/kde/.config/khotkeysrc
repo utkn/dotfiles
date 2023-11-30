@@ -1029,6 +1029,7 @@ AnimationDurationFactor[$d]
 ColorScheme[$d]
 LookAndFeelPackage[$d]
 ScrollbarLeftClickNavigatesByPage[$d]
+ShowDeleteCommand[$d]
 SingleClick[$d]
 widgetStyle[$d]
 
@@ -1060,10 +1061,16 @@ View Style[$d]
 ScaleFactor[$d]
 ScreenScaleFactors[$d]
 
+[KShortcutsDialog Settings]
+Dialog Size[$d]
+
 [Main]
 AlreadyImported=defaults,kde32b1,konqueror_gestures_kde321
 Disabled=false
 Version=2
+
+[PreviewSettings]
+MaximumRemoteSize[$d]
 
 [Shortcuts]
 Close[$d]

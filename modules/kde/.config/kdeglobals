@@ -157,13 +157,14 @@ toolBarFont=Noto Sans,10,-1,5,50,0,0,0,0,0
 AnimationDurationFactor=0.5
 LookAndFeelPackage=com.github.vinceliuice.Layan
 ScrollbarLeftClickNavigatesByPage=false
+ShowDeleteCommand=false
 SingleClick=false
 widgetStyle=kvantum
 
 [KFileDialog Settings]
 Allow Expansion=false
 Automatically select filename extension=true
-Breadcrumb Navigation=true
+Breadcrumb Navigation=false
 Decoration position=2
 LocationCombo Completionmode=5
 PathCombo Completionmode=5
@@ -184,10 +185,16 @@ View Style=DetailTree
 ScaleFactor=1.5
 ScreenScaleFactors=DP-1=1.5;HDMI-1=1.5;HDMI-2=1.5;
 
+[KShortcutsDialog Settings]
+Dialog Size=1699,902
+
+[PreviewSettings]
+MaximumRemoteSize=0
+
 [Shortcuts]
 Close=Ctrl+W
 Copy=Ctrl+C
-CreateFolder=Ctrl+Shift+N
+CreateFolder=
 Cut=Ctrl+X
 Find=; Ctrl+F
 FindNext=

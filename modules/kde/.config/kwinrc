@@ -58,7 +58,7 @@ ShowDesktopMode=1
 padding=4
 
 [Tiling][3e6a61ea-6991-5af6-b487-1f9fd9fca39d]
-tiles={"layoutDirection":"horizontal","tiles":[]}
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.31639789744434677},{"width":0.6836021025556532}]}
 
 [Tiling][8fc36269-c847-5421-b4e8-fae85151b0da]
 tiles={"layoutDirection":"horizontal","tiles":[]}
