@@ -1,3 +1,5 @@
 [EmbedSettings]
+embed-application/x-shellscript=false
 embed-application/x-yaml=false
+embed-application/xml=false
 embed-text/plain=false

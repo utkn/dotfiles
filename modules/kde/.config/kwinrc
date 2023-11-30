@@ -2,7 +2,7 @@
 update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:make-translucency-effect-disabled-by-default,kwin.upd:enable-scale-effect-by-default,kwin.upd:animation-speed-cleanup,kwin.upd:replace-cascaded-zerocornered,kwin.upd:desktop-grid-click-behavior,kwin.upd:no-swap-encourage,kwin.upd:remove-flip-switch-effect,kwin.upd:remove-cover-switch-effect,kwin.upd:remove-cubeslide-effect,kwin.upd:remove-xrender-backend,kwin.upd:overview-group-plugin-id
 
 [Compositing]
-LatencyPolicy=ExtremelyLow
+LatencyPolicy=High
 
 [Desktops]
 Id_1=d8221821-8829-479a-9e39-b00d4323c9b5
@@ -12,15 +12,39 @@ Id_4=f69667dc-f168-485b-8105-540314be0be5
 Number=4
 Rows=1
 
-[MouseBindings]
-CommandTitlebarWheel=Previous/Next Desktop
+[Effect-windowview]
+BorderActivateAll=9
+
+[NightColor]
+Active=true
+Mode=Times
+NightTemperature=4200
 
 [Plugins]
+blurEnabled=true
+contrastEnabled=true
+diminactiveEnabled=true
+krohnkiteEnabled=true
+kwin4_effect_translucencyEnabled=true
 poloniumEnabled=true
+screenedgeEnabled=false
+
+[Script-krohnkite]
+enableMonocleLayout=false
+enableSpiralLayout=false
+enableSpreadLayout=false
+enableStairLayout=false
+enableThreeColumnLayout=false
+layoutPerActivity=false
+layoutPerDesktop=false
+monocleMaximize=false
 
 [Script-polonium]
 Borders=3
+FilterClientCaption=System Settings
+FilterProcessName=krunner, yakuake, kded, polkit, plasmashell,spectacle,mpv
 InsertionPoint=1
+MaximizeSingle=true
 Unfullscreen=true
 
 [SubSession: 329ce39b-37f6-4518-a6a3-5d4d327e6116]
@@ -28,13 +52,13 @@ active=-1
 count=0
 
 [TabBox]
-LayoutName=thumbnails
+ShowDesktopMode=1
 
 [Tiling]
 padding=4
 
 [Tiling][3e6a61ea-6991-5af6-b487-1f9fd9fca39d]
-tiles={"layoutDirection":"horizontal","tiles":[{"width":0.44121093749999996},{"width":0.5587890625}]}
+tiles={"layoutDirection":"horizontal","tiles":[]}
 
 [Tiling][8fc36269-c847-5421-b4e8-fae85151b0da]
 tiles={"layoutDirection":"horizontal","tiles":[]}
@@ -43,14 +67,20 @@ tiles={"layoutDirection":"horizontal","tiles":[]}
 tiles={"layoutDirection":"horizontal","tiles":[]}
 
 [Tiling][c8a656d9-5c72-5566-bf13-a73bb13e0a6b]
-tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+tiles={"layoutDirection":"horizontal","tiles":[]}
 
 [Windows]
+BorderSnapZone=0
 DelayFocusInterval=0
+ElectricBorderMaximize=false
+ElectricBorderTiling=false
 FocusPolicy=FocusFollowsMouse
+NextFocusPrefersMouse=true
+WindowSnapZone=0
 
 [Xwayland]
 Scale=1.5
 
 [org.kde.kdecoration2]
-ButtonsOnRight=HSIX
+ButtonsOnLeft=M
+ButtonsOnRight=HSX

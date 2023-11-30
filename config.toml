@@ -7,6 +7,10 @@ source = "modules/kde"
 target = "~"
 
 [[module]]
+source = "modules/konsole"
+target = "~"
+
+[[module]]
 source = "modules/helix"
 target = "~/.config/helix"
 
