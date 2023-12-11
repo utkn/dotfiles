@@ -24,6 +24,7 @@ export const BarWindow = (/** @type {number} */  monitor) => Widget.Window({
   layer: 'top',
   exclusivity: 'exclusive',
   child: Widget.CenterBox({
+    class_name: 'bar-content',
     hexpand: true,
     start_widget: 
       Widget.Box({
@@ -49,8 +50,8 @@ export const BarWindow = (/** @type {number} */  monitor) => Widget.Window({
           HSeparator(),
           MiniNetworkControl(),
           HSeparator(),
-          HSeparator(),
           TrayRevealer(),
+          HSeparator(),
           HSeparator(),
           DateTime(),
           HSeparator(),

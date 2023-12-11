@@ -4,13 +4,15 @@ import Widget from "resource:///com/github/Aylur/ags/widget.js"
 import App from "resource:///com/github/Aylur/ags/app.js";
 
 import { registerWindow } from "./windows.js";
-import { BoxedRevealer, HSeparator, VSeparator } from "./components.js";
-import { execAsync } from "resource:///com/github/Aylur/ags/utils.js";
+import { HSeparator, VSeparator } from "./components.js";
+import { execAsync, timeout } from "resource:///com/github/Aylur/ags/utils.js";
 import Gdk from "gi://Gdk";
 
 const INPUT_WIDTH = 200;
 const EXPANDED_WIDTH = INPUT_WIDTH + 20;
-const ENTRY_WIDTH = EXPANDED_WIDTH + 15;
+const ENTRY_WIDTH = EXPANDED_WIDTH + 30;
+const LAUNCHER_WINDOW_NAME = 'launcher';
+const ACTIVATE_COMBO = [Gdk.KEY_Return];
 
 const Entry = ({icon, labelProps, onClick, keyCombo = [] }) => { return { icon, labelProps, onClick, keyCombo } };
 
@@ -24,7 +26,7 @@ const CalculatorEntryProvider = ({ query }) => {
         setup: self => {
 					output.setValue('...');
           return execAsync(['awk', `BEGIN{print ${query}}`])
-						.then(res => parseInt(res))
+						.then(res => parseFloat(res))
             .then(res => isNaN(res) ? output.setValue(NO_OUTPUT) : output.setValue(`${res}`))
             .catch(err => { output.setValue(NO_OUTPUT); console.log(err); });
         },
@@ -35,7 +37,7 @@ const CalculatorEntryProvider = ({ query }) => {
 	];
 }
 
-const BashEntryProvider = ({ query }) => query.trim() === '' ? [] : [
+const ExecEntryProvider = ({ query }) => query.trim() === '' ? [] : [
 	Entry({ 
 		icon: 'utilities-terminal-symbolic', 
 		labelProps: { label: `Execute ${query}` }, 
@@ -46,8 +48,7 @@ const BashEntryProvider = ({ query }) => query.trim() === '' ? [] : [
 
 const AppEntryProvider = ({ query }) => {
 	const applications = Applications.query(query)
-		.sort((a, b) => a.frequency - b.frequency)
-		.reverse()
+		.sort((a, b) => b.frequency - a.frequency)
 		.slice(0, 5);
 	return [...applications.entries()].map(([i, app]) => Entry({
 			icon: app.icon_name,
@@ -63,7 +64,7 @@ const AppEntryProvider = ({ query }) => {
 
 const PROVIDERS = [
 	AppEntryProvider,
-	BashEntryProvider,
+	ExecEntryProvider,
 	CalculatorEntryProvider,
 ]
 
@@ -84,7 +85,7 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 	const entries = Variable([]);
 	const activateEntry = (entry) => {
 		entry.onClick();
-		App.toggleWindow('launcher');
+		App.toggleWindow(LAUNCHER_WINDOW_NAME);
 	};
 	const handleKeyCombo = (keyCombo) => {
 		if(keyCombo.length === 0) {
@@ -96,7 +97,7 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 			currSelection.setValue((currSelection.value + 1) % numEntries)
 		} else if(matches([Gdk.KEY_Up])) {
 			currSelection.setValue((currSelection.value === 0) ? (numEntries-1) : currSelection.value - 1);
-		} else if(matches([Gdk.KEY_Return]) || matches([Gdk.KEY_Tab])) {
+		} else if(matches(ACTIVATE_COMBO)) {
 			const selectedEntry = entries.value.at(currSelection.value);
 			if(selectedEntry !== undefined) {
 				activateEntry(selectedEntry)
@@ -113,6 +114,7 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 		.flatMap(entries => entries);
 	const createWidgets = (entries) => [...entries.entries()].flatMap(([i, entry]) => [
 		Widget.EventBox({
+			on_hover: () => currSelection.setValue(i),
 			on_primary_click: () => activateEntry(entry),
 			child: Widget.Overlay({
 				child: Widget.Box({
@@ -122,7 +124,7 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 						transition: 'crossfade',
 						child: Widget.Box({
 							hexpand: true,
-							css: 'background: #303030; border-radius: 20px',
+							class_name: 'groupoid',
 						}),
 						binds: [['reveal-child', currSelection, 'value', s => s === i]],
 					})
@@ -131,7 +133,7 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 					Widget.Box({
 						// hexpand: true,
 						vpack: 'center',
-						css: 'padding: 2px 10px',
+						css: 'padding: 2px 5px',
 						children: [
 							Widget.Icon({
 								vpack: 'center',
@@ -159,7 +161,8 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 		VSeparator(),
 	])	
 	return Widget.Box({
-		css: 'background: #000; border-radius: 0px 0px 10px 10px; padding: 10px',
+		class_name: 'launcher-list',
+		// css: 'background: #000; border-radius: 0px 0px 10px 10px; padding: 10px 5px',
 		vertical: true,
 		binds: [
 			['children', entries, 'value', s => createWidgets(s)]
@@ -171,7 +174,7 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 	});
 }
 
-const SearchBox = ({ currQuery }) => {
+const SearchBox = ({ currQuery, currKeyCombo }) => {
 	return Widget.Box({
 		width_request: INPUT_WIDTH,
 		hpack: 'center',
@@ -187,21 +190,56 @@ const SearchBox = ({ currQuery }) => {
 	})
 }
 
+const LauncherHidden = () => {
+	const topApplicationIcons = (limit) => 
+		Applications.list.sort((a1, a2) => a2.frequency - a1.frequency)
+			.slice(0, limit)
+			.map(app => app.icon_name);
+		return Widget.Box({
+			connections: [
+				[Applications, self => self.children = topApplicationIcons(3)
+						.map(icon => [
+							Widget.Icon({ icon: icon || '', size: 16 }),
+					]).reduce((a, b) => a.concat(HSeparator(), b))
+				]
+			]
+		})
+}
+
+
+const LauncherExpanded = ({ visible }) => {
+	return Widget.Box({
+		children: [
+			Widget.Icon({ icon: 'system-search-symbolic', size: 16 }),
+			Widget.Revealer({
+				transition: 'slide_left',
+				child: Widget.Box({
+					width_request: EXPANDED_WIDTH
+				}),
+				connections: [
+					[visible, self => visible.value ? timeout(0, () => self.reveal_child = visible.value) : self.reveal_child = false]
+				]
+			})
+		]
+	})
+};
+
 const LauncherWindow = ({ windowVisible }) => {
 	const currQuery = Variable('');
 	const currKeyCombo = Variable([]);
   return Widget.Window({
     anchor: ['top'],
     layer: 'top',
-    name: 'launcher',
+    name: LAUNCHER_WINDOW_NAME,
     exclusivity: 'ignore',
     visible: windowVisible ,
     focusable: true,
     popup: true,
     child: Widget.Box({
+			class_name: 'launcher-window-frame',
       vertical: true,
       children: [
-        SearchBox({ currQuery }),
+        SearchBox({ currQuery, currKeyCombo }),
 				VSeparator(),
         EntryLister({ currQuery, currKeyCombo })
       ],
@@ -225,24 +263,24 @@ export const MiniLauncher = () => {
  	const visible = Variable(false);
 	const launcherWindow = LauncherWindow({ windowVisible: visible });
 	registerWindow(launcherWindow);
-  return Widget.EventBox({
-		on_primary_click: () => App.toggleWindow(launcherWindow.name || ''),
+	return Widget.EventBox({
+		on_primary_click: () => App.toggleWindow(launcherWindow.name),
 		child: Widget.Box({
+			vpack: 'center',
 			class_name: 'groupoid',
-	    children: [
-				Widget.Icon('system-search-symbolic'),
-				BoxedRevealer({
-					reveal: visible,
-					revealerChild: Widget.Box({
-						width_request: EXPANDED_WIDTH
-					}),
-					revealerProps: {
-						transition: 'slide_left',
-						transition_duration: 200,
-					}
-				})
+			children: [
+				Widget.Stack({
+					transition: 'crossfade',
+					transition_duration: 100,
+					items: [
+						['expanded', LauncherExpanded({ visible })],
+						['hidden', LauncherHidden()],
+					],
+					connections: [
+						[visible, self => visible.value ? self.shown = 'expanded' : timeout(0, () => self.shown = 'hidden')]
+					]
+				}),
 			]
-	  }),
-	});
-}
-
+		})
+	})
+};

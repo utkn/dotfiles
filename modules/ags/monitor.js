@@ -7,7 +7,7 @@ import { BoxedRevealer, HSeparator } from './components.js';
 import { TERMINAL_NAME } from './globals.js';
 
 const HEAT_SENSOR_NAME = 'nvme-pci-0200';
-const TRANSITION_DURATION = 300;
+const TRANSITION_DURATION = 200;
 const FORCE_GIGS = true;
 const SYSTEM_MONITOR_APP = `${TERMINAL_NAME} -e btop`;
 const POLL_TIME = 5000;
@@ -69,7 +69,7 @@ const MonitorGauge = ({ statProvider, showAlt, altText }) => {
     ],
   });
   const altTextView = Widget.Overlay({
-    child: Widget.Label({ label: '', css: '' }),
+    child: Widget.Label({ label: '' }),
     overlays: [Widget.Label({ label: altText })]
   });
   return Widget.Stack({

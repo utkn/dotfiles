@@ -82,7 +82,7 @@ const WorkspaceIndicator = ({ previewPosition, workspace, monitor }) => {
 			pass_through: true,
       vpack: "center",
       child: Widget.Icon({
-        css: `padding: 5px; background: #303030; border-radius: 5px;`,
+        class_name: 'workspace-icon',
         size: 14,
         binds: [
           ['icon', primaryIcon]
