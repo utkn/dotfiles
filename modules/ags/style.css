@@ -1,0 +1,105 @@
+* {
+  all: unset;
+}
+
+.bar {
+  background-color: #000;
+}
+
+scale trough highlight {
+  background-color: #cd5d6c;
+  color: #000000;
+  border-radius: 10px;
+}
+
+scale trough {
+  background-color: #4e4e4e;
+  border-radius: 50px;
+  min-height: 5px;
+  min-width: 30px;
+}
+
+spinner:checked { 
+  opacity: 1; 
+  animation: spin 1s linear infinite; 
+}
+
+.window-frame {
+  border-radius: 5px; 
+  background: #000000; 
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.false-button {
+  background-color: #303030;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+button {
+  background-color: #303030;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+button:hover {
+  background-color: #393939;
+}
+
+button:active {
+  background-color: #424242;
+}
+
+tooltip {
+  border-radius: 5px; 
+  background: #111111; 
+  color: #fff; 
+  border-radius: 5px; 
+  padding: 5px;
+}
+
+menu {
+  border-radius: 5px; 
+  background: #111111; 
+  color: #fff; 
+  border-radius: 5px;
+  padding: 5px 0px;
+}
+
+menuitem {
+  padding: 0px 10px;
+}
+
+menuitem:disabled {
+  opacity: 0.5;
+}
+
+menuitem:hover {
+  background: #CD5D6C;
+}
+
+.groupoid {
+  font-size: small;
+  padding: 2px 10px;
+  background: #212121; 
+  border-radius: 20px;
+}
+
+.monitor-part-low {
+  color: #99ff9f;
+}
+
+.monitor-part-medium {
+  color: #f3ff99;
+}
+
+.monitor-part-high {
+  color: #ffb599;
+}
+
+.monitor-part-critical {
+  color: #ff9999;
+}
+
