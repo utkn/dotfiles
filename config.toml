@@ -3,14 +3,6 @@ source = "modules/alacritty"
 target = "~/.config/alacritty"
 
 [[module]]
-source = "modules/kde"
-target = "~"
-
-[[module]]
-source = "modules/konsole"
-target = "~"
-
-[[module]]
 source = "modules/helix"
 target = "~/.config/helix"
 
@@ -18,3 +10,10 @@ target = "~/.config/helix"
 source = "modules/fish"
 target = "~/.config/fish"
 
+[[module]]
+source = "modules/ags"
+target = "~/.config/ags"
+
+[[module]]
+source = "modules/hypr"
+target = "~/.config/hypr"
