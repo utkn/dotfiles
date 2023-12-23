@@ -8,9 +8,9 @@ import { HSeparator, VSeparator } from "./components.js";
 import { execAsync, timeout } from "resource:///com/github/Aylur/ags/utils.js";
 import Gdk from "gi://Gdk";
 
-const INPUT_WIDTH = 200;
-const EXPANDED_WIDTH = INPUT_WIDTH + 20;
-const ENTRY_WIDTH = EXPANDED_WIDTH + 30;
+const INPUT_WIDTH = 220;
+const EXPANDED_WIDTH = INPUT_WIDTH;
+const ENTRY_WIDTH = EXPANDED_WIDTH;
 const LAUNCHER_WINDOW_NAME = 'launcher';
 const ACTIVATE_COMBO = [Gdk.KEY_Return];
 
@@ -87,16 +87,23 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 		entry.onClick();
 		App.toggleWindow(LAUNCHER_WINDOW_NAME);
 	};
+	const nextEntry = () => {
+			const numEntries = entries.value.length;
+			currSelection.setValue((currSelection.value + 1) % numEntries)
+	};
+	const prevEntry = () => {
+		const numEntries = entries.value.length;
+		currSelection.setValue((currSelection.value === 0) ? (numEntries-1) : currSelection.value - 1);
+	};
 	const handleKeyCombo = (keyCombo) => {
 		if(keyCombo.length === 0) {
 			return;
 		}
 		const matches = (other) => other.toString() === keyCombo.toString();
-		const numEntries = entries.value.length;
 		if(matches([Gdk.KEY_Down])) {
-			currSelection.setValue((currSelection.value + 1) % numEntries)
+			nextEntry()
 		} else if(matches([Gdk.KEY_Up])) {
-			currSelection.setValue((currSelection.value === 0) ? (numEntries-1) : currSelection.value - 1);
+			prevEntry()
 		} else if(matches(ACTIVATE_COMBO)) {
 			const selectedEntry = entries.value.at(currSelection.value);
 			if(selectedEntry !== undefined) {
@@ -124,14 +131,13 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 						transition: 'crossfade',
 						child: Widget.Box({
 							hexpand: true,
-							class_name: 'groupoid',
+							class_name: 'entry-highlight',
 						}),
 						binds: [['reveal-child', currSelection, 'value', s => s === i]],
 					})
 				}),
 				overlays: [
 					Widget.Box({
-						// hexpand: true,
 						vpack: 'center',
 						css: 'padding: 2px 5px',
 						children: [
@@ -148,6 +154,7 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 							}),
 						]
 					}),
+					// Shortcut key
 					Widget.Box({
 						hpack: 'end',
 						css: 'color: #8c8c8c; padding-right: 8px',
@@ -160,26 +167,30 @@ const EntryLister = ({ currQuery, currKeyCombo }) => {
 		}),
 		VSeparator(),
 	])	
-	return Widget.Box({
-		class_name: 'launcher-list',
-		// css: 'background: #000; border-radius: 0px 0px 10px 10px; padding: 10px 5px',
-		vertical: true,
-		binds: [
-			['children', entries, 'value', s => createWidgets(s)]
-		],
-		connections: [
-			[currQuery, () => entries.setValue(collectEntries())],
-			[currKeyCombo, () => handleKeyCombo(currKeyCombo.value)],
-		],
+	return Widget.EventBox({
+		on_scroll_up: () => prevEntry(),
+		on_scroll_down: () => nextEntry(),
+		child: Widget.Box({
+			class_name: 'launcher-list',
+			// css: 'background: #000; border-radius: 0px 0px 10px 10px; padding: 10px 5px',
+			vertical: true,
+			binds: [
+				['children', entries, 'value', s => createWidgets(s)]
+			],
+			connections: [
+				[currQuery, () => entries.setValue(collectEntries())],
+				[currKeyCombo, () => handleKeyCombo(currKeyCombo.value)],
+			],
+		}) 
 	});
 }
 
 const SearchBox = ({ currQuery, currKeyCombo }) => {
 	return Widget.Box({
+		class_name: 'launcher-search-foreground',
 		width_request: INPUT_WIDTH,
 		hpack: 'center',
 		vertical: true,
-		css: 'background: transparent;',
 		children: [
 			Widget.Entry({
 				xalign: 0,
@@ -209,8 +220,8 @@ const LauncherHidden = () => {
 
 const LauncherExpanded = ({ visible }) => {
 	return Widget.Box({
+		class_name: 'launcher-search-background',
 		children: [
-			Widget.Icon({ icon: 'system-search-symbolic', size: 16 }),
 			Widget.Revealer({
 				transition: 'slide_left',
 				child: Widget.Box({
@@ -240,7 +251,6 @@ const LauncherWindow = ({ windowVisible }) => {
       vertical: true,
       children: [
         SearchBox({ currQuery, currKeyCombo }),
-				VSeparator(),
         EntryLister({ currQuery, currKeyCombo })
       ],
     }),
@@ -266,7 +276,6 @@ export const MiniLauncher = () => {
 	return Widget.EventBox({
 		on_primary_click: () => App.toggleWindow(launcherWindow.name),
 		child: Widget.Box({
-			vpack: 'center',
 			class_name: 'groupoid',
 			children: [
 				Widget.Stack({

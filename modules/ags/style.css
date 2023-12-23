@@ -1,24 +1,47 @@
+@import url('/home/utkn/.cache/wal/colors-gtkcss.css');
+
 * {
   all: unset;
 }
 
 .bar {
-  background-color: rgba(0, 0, 0, 1);
+  color: #fff;
   border-radius: 0px 0px 5px 5px;
 }
 
 .bar-content {
-  padding: 5px 0px;
+  padding: 1px 0px;
+}
+
+.launcher-search-background {
+  border-radius: 10px 10px 0px 0px;
+	background: @background;
+  padding: 0px 5px;
+  min-height: 16px;
+}
+
+.launcher-search-foreground {
+  background: transparent;
+  padding: 0px 5px 0px 5px;
+}
+
+.launcher-window-frame {
+  margin-top: 6px;
+}
+
+.launcher-list {
+  border-radius: 0px 0px 10px 10px;
+  background: @background;
+  color: #fff;
+  padding: 5px;
 }
 
 scale trough highlight {
-  background-color: #cd5d6c;
-  color: #000000;
+  background-color: @color3;
   border-radius: 10px;
 }
 
 scale trough {
-  background-color: #4e4e4e;
   border-radius: 50px;
   min-height: 5px;
   min-width: 30px;
@@ -30,22 +53,11 @@ spinner:checked {
 }
 
 .window-frame {
-  border-radius: 5px;
-  background: rgba(0, 0, 0, 1);
-  color: #fff;
+  border-radius: 10px;
+  background: @background;
   padding: 5px;
 }
 
-.launcher-window-frame {
-  margin-top: 7px;
-}
-
-.launcher-list {
-  border-radius: 0px 0px 10px 10px;
-  background: rgba(0, 0, 0, 1);
-  color: #fff;
-  padding: 5px;
-}
 
 .false-button {
   background-color: #303030;
@@ -69,7 +81,7 @@ button:active {
 
 tooltip {
   border-radius: 5px; 
-  background: #111111; 
+  background: @background; 
   color: #fff; 
   border-radius: 5px; 
   padding: 5px;
@@ -77,7 +89,7 @@ tooltip {
 
 menu {
   border-radius: 5px; 
-  background: #111111; 
+  background: @background; 
   color: #fff; 
   border-radius: 5px;
   padding: 5px 0px;
@@ -92,20 +104,36 @@ menuitem:disabled {
 }
 
 menuitem:hover {
-  background: #CD5D6C;
+  background: #303030;
 }
 
 .groupoid {
   font-size: small;
-  padding: 2px 10px;
-  background: rgba(33, 33, 33, 1); 
-  border-radius: 20px;
+  padding: 0px 10px;
+  border-radius: 8px;
+}
+
+.entry-highlight {
+  font-size: small;
+  padding: 3px 10px;
+  border-radius: 8px;
+  background-color: #303030;
 }
 
 .workspace-icon {
   padding: 5px; 
-  background: rgba(33, 33, 33, 1); 
   border-radius: 5px;
+}
+
+.workspace-icon-highlight {
+  border: 1px solid @color3; 
+  border-radius: 5px;
+}
+
+.workspace-preview-window-bounds {
+  border: 1px solid @color10; 
+  border-radius: 2px;
+  opacity: 0.8;
 }
 
 .monitor-part-low {
@@ -124,3 +152,10 @@ menuitem:hover {
   color: #ff9999;
 }
 
+ .monitor-gauge {
+  color: @color3; 
+  background: #fff; 
+  font-size: 2px; 
+  min-width: 14px; 
+  min-height: 14px;
+}

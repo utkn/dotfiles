@@ -93,7 +93,7 @@ const WorkspaceIndicator = ({ previewPosition, workspace, monitor }) => {
           child: Widget.Label({
             hpack: "start",
             vpack: "end",
-            css: `font-size: 10px`,
+            css: `font-size: 9px`,
             label: ` ${workspace.name}`,
           }),
         }),
@@ -101,7 +101,7 @@ const WorkspaceIndicator = ({ previewPosition, workspace, monitor }) => {
           transition: "crossfade",
           transition_duration: 500,
           child: Widget.EventBox({
-            css: 'border: 1px solid #cd5d6c; border-radius: 5px;',
+            class_name: 'workspace-icon-highlight',
             on_hover,
           }),
           binds: [['reveal-child', showBorders]],
@@ -156,8 +156,8 @@ const WorkspacePreview = ({ workspaceId, width }) => {
           self.put(Widget.Icon({ 
             width_request: w, 
             height_request: h, 
+            class_name: 'workspace-preview-window-bounds',
             icon, 
-            css: 'border: 1px solid #276095; border-radius: 3px' 
           }), x, y);
         });
         self.show_all();

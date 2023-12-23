@@ -62,7 +62,7 @@ const SysStat = ({ name = '', units = '', data = {} }) =>{
 
 const MonitorGauge = ({ statProvider, showAlt, altText }) => {
   const gaugeView = Widget.CircularProgress({
-    css: 'color: #cd5d6c; background: white; font-size: 2px; min-width: 14px; min-height: 14px;',
+    class_name: 'monitor-gauge',
     start_at: 0.75,
     binds: [
       ['value', statProvider, 'value', s => s.percentUsage / 100]

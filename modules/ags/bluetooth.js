@@ -111,7 +111,7 @@ export const BluetoothDevice = (dev) => {
       HSeparator(),
       Widget.Label({ xalign: 0, hexpand: true, label: dev.name }),
       HSeparator(),
-      Widget.Icon({ icon: dev.icon_name, size: 24 }),
+      Widget.Icon({ icon: dev.icon_name, size: 16 }),
     ],
   });
 }
