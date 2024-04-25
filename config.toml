@@ -17,3 +17,7 @@ target = "~/.config/ags"
 [[module]]
 source = "modules/hypr"
 target = "~/.config/hypr"
+
+[[module]]
+source = "modules/iterm2"
+target = "~/.config/iterm2"
