@@ -3,7 +3,7 @@ theme = "custom"
 [editor]
 bufferline = "always"
 cursorline = true
-# auto-pairs = false
+auto-pairs = false
 
 [editor.cursor-shape]
 insert = "bar"

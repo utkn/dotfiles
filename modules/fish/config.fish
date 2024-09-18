@@ -17,7 +17,8 @@ if test -d /opt/homebrew
     set -x HOMEBREW_PREFIX /opt/homebrew
     set -x HOMEBREW_CELLAR "$HOMEBREW_PREFIX/Cellar"
     set -x HOMEBREW_REPOSITORY "$HOMEBREW_PREFIX/homebrew"
-    set -ax PATH "$HOMEBREW_PREFIX/bin"
+    set -px PATH "$HOMEBREW_PREFIX/bin"
+    set -px PATH "$HOMEBREW_PREFIX/sbin"
 end
 
 # helix (hx binary)
