@@ -39,9 +39,20 @@ if test -d "$HOME/.cargo"
     set -ax PATH "$HOME/.cargo/bin"
 end
 
+# noir
+if test -d "$HOME/.nargo"
+    set -x NARGO_HOME "$HOME/.nargo"
+    set -ax PATH "$NARGO_HOME/bin"
+end
+
 if test -d "$HOME/.local/bin"
     set -ax PATH "$HOME/.local/bin"
 end
 
+if test -d /usr/local/bin
+    set -ax PATH /usr/local/bin
+end
+
 set -x LC_ALL en_US.UTF-8
 set -x LC_CTYPE en_US.UTF-8
+set -x GPG_TTY "$(tty)"

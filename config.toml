@@ -1,8 +1,4 @@
 [[module]]
-source = "modules/alacritty"
-target = "~/.config/alacritty"
-
-[[module]]
 source = "modules/helix"
 target = "~/.config/helix"
 
@@ -15,9 +11,9 @@ source = "modules/ags"
 target = "~/.config/ags"
 
 [[module]]
-source = "modules/hypr"
-target = "~/.config/hypr"
-
-[[module]]
 source = "modules/iterm2"
 target = "~/.config/iterm2"
+
+[[module]]
+source = "modules/nvim"
+target = "~/.config/nvim"
